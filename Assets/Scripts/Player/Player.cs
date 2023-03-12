@@ -37,48 +37,52 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidbody;
     public Rigidbody Rigidbody =>_rigidbody;
 
+
+    [SerializeField] private BulletPool _bulletPool;
+    public BulletPool BulletPool =>_bulletPool;
+
    private void Start()
     {
       _rigidbody = GetComponent<Rigidbody>();
-      this.InitBehaviors();
-      this.SetBehaviorDefolt();
+      InitBehaviors();
+      SetBehaviorDefolt();
     }
 
     public void SetBehaviorAttack()
     {
-       var behavior = this.GetBehavior<PlayerBehaviorAttack>();
-       this.SetBehavior(behavior);
+       var behavior = GetBehavior<PlayerBehaviorAttack>();
+       SetBehavior(behavior);
     }
 
     public void SetBehaviorMove()
     {
-       var behavior = this.GetBehavior<PlayerBehaviorMove>();
-       this.SetBehavior(behavior);
+       var behavior = GetBehavior<PlayerBehaviorMove>();
+       SetBehavior(behavior);
     }
 
     public void SetBehaviorIdle()
     {
        var behavior = this.GetBehavior<PlayerBehaviorIdle>();
-       this.SetBehavior(behavior);
+       SetBehavior(behavior);
     }
 
     private void InitBehaviors()
     {
-       this._behaviorsMap =  new Dictionary<Type, IPlayerBehavior>();
+       _behaviorsMap =  new Dictionary<Type, IPlayerBehavior>();
 
-        this._behaviorsMap[typeof(PlayerBehaviorIdle)] = new PlayerBehaviorIdle(this);
-        this._behaviorsMap[typeof(PlayerBehaviorAttack)] = new PlayerBehaviorAttack(this,_bulletPrefab,_enemyController);
-        this._behaviorsMap[typeof(PlayerBehaviorMove)] = new PlayerBehaviorMove(this,_joystick);
+       _behaviorsMap[typeof(PlayerBehaviorIdle)] = new PlayerBehaviorIdle(this);
+       _behaviorsMap[typeof(PlayerBehaviorAttack)] = new PlayerBehaviorAttack(this,_bulletPrefab,_enemyController);
+       _behaviorsMap[typeof(PlayerBehaviorMove)] = new PlayerBehaviorMove(this,_joystick);
 
     }
     
     private void SetBehavior(IPlayerBehavior newBehavior)
     {
-       if(this._behaviorCurrent != null)
-            this._behaviorCurrent.Exit();
+       if(_behaviorCurrent != null)
+             _behaviorCurrent.Exit();
           
-       this._behaviorCurrent = newBehavior;
-       this._behaviorCurrent.Enter();
+       _behaviorCurrent = newBehavior;
+       _behaviorCurrent.Enter();
     }
 
     private void SetBehaviorDefolt()
@@ -89,13 +93,13 @@ public class Player : MonoBehaviour
     private IPlayerBehavior GetBehavior<T>() where T: IPlayerBehavior
     {
        var type = typeof(T);
-       return this._behaviorsMap[type];
+       return _behaviorsMap[type];
     }
 
     private void LateUpdate()
     {
-       if(this._behaviorCurrent !=null)
-           this._behaviorCurrent.Update();
+       if(_behaviorCurrent !=null)
+           _behaviorCurrent.Update();
     }
 
      private void OnTriggerEnter(Collider other) 
@@ -111,7 +115,7 @@ public class Player : MonoBehaviour
     if(HealthPoint <= 0)
     {
        _healthPoint=0;
-       gameObject.SetActive(false);
+        gameObject.SetActive(false);
        _menu.StopGame();
     }    
    }

@@ -8,9 +8,12 @@ public class PlayerBehaviorAttack :  IPlayerBehavior
     private Enemy _nearstEnemy;
     private float _time;
     private GameObject _bulletPrefab;
-    private Player _player;
+     private Player _player;
+     private BulletPool _bulletPool;
 
-
+    private void Start() {
+        
+    }
     public PlayerBehaviorAttack(Player player,GameObject bulletPrefab,EnemyController enemyController)
     {
        _player = player;
@@ -20,6 +23,7 @@ public class PlayerBehaviorAttack :  IPlayerBehavior
     public void Enter()
     {
         Debug.Log("Enter Attack Behavior");
+      _bulletPool = _player.BulletPool.GetComponent<BulletPool>();
     }
 
     public void Exit()
@@ -39,11 +43,16 @@ public class PlayerBehaviorAttack :  IPlayerBehavior
     { 
         _time += Time.deltaTime;
 
-       if(_time > _player.AttackSpeed)
+      if(_time > _player.AttackSpeed)
        {
-        var bullet =  MonoBehaviour.Instantiate(_bulletPrefab,_player.BulletCreator.position,Quaternion.identity);
+     
+       _bulletPool.CreateCube(_player.BulletCreator.position,_player.BulletCreator.forward * _player.BulletSpeed);
+      // _bulletPool.AddForcedBullet(_player.transform.forward * _player.BulletSpeed);
+
+       /* var bullet =  MonoBehaviour.Instantiate(_bulletPrefab,_player.BulletCreator.position,Quaternion.identity);
         bullet.GetComponent<Rigidbody>().AddForce(_player.transform.forward * _player.BulletSpeed,
-          ForceMode.VelocityChange);
+          ForceMode.VelocityChange);*/
+
           _time = 0;
        }
     }
@@ -54,8 +63,9 @@ public class PlayerBehaviorAttack :  IPlayerBehavior
            return;
            
       _nearstEnemy = _enemyController.GetDistance(_player.transform.position);
-      if(_nearstEnemy ==null)
-          return;
+
+       if(_nearstEnemy ==null)
+           return;
           
        Debug.DrawLine(_player.transform.position,_nearstEnemy.transform.position);
 

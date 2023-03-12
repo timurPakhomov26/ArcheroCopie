@@ -348,12 +348,14 @@
 "Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs"
 "Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs"
 "Assets/Scripts/Bullet.cs"
+"Assets/Scripts/BulletPool.cs"
 "Assets/Scripts/CameraMove.cs"
 "Assets/Scripts/Coin.cs"
 "Assets/Scripts/CoinManager.cs"
 "Assets/Scripts/Enemy/Barbarian.cs"
 "Assets/Scripts/Enemy/Elf.cs"
 "Assets/Scripts/Enemy/Enemy.cs"
+"Assets/Scripts/EnemyBullet.cs"
 "Assets/Scripts/EnemyController.cs"
 "Assets/Scripts/Menu.cs"
 "Assets/Scripts/Player/Player.cs"
@@ -362,6 +364,7 @@
 "Assets/Scripts/Player/PlayerBehaviors/PlayerBehaviorIdle.cs"
 "Assets/Scripts/Player/PlayerBehaviors/PlayerBehaviorMove.cs"
 "Assets/Scripts/Player/PlayerController.cs"
+"Assets/Scripts/PoolMono.cs"
 -langversion:9.0
 
 /deterministic

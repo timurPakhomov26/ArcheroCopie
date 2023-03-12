@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
      {
       if(Input.GetMouseButtonDown(0))
       {
-           this._player.SetBehaviorMove();
+           _player.SetBehaviorMove();
       }       
 
       if(Input.GetMouseButtonUp(0))
