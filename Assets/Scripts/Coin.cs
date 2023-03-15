@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
@@ -14,7 +12,15 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-       Destroy(gameObject);   
-       FindObjectOfType<CoinManager>().AddCoin();
+      if(other.attachedRigidbody == null)
+         return;
+
+      if(other.attachedRigidbody.GetComponent<Player>())
+      {
+        Destroy(gameObject);   
+        FindObjectOfType<CoinManager>().AddCoin();
+      }
+         
+       
     }
 }

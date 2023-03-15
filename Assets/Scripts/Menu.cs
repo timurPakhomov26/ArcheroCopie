@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
@@ -9,7 +8,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject _winMenu;
     [SerializeField] private GameObject _door;
     [SerializeField] private EnemyController _enemyController;
-    
+    [SerializeField] private CoinManager _coinManager;
 
     
     private void Start() 
@@ -21,7 +20,7 @@ public class Menu : MonoBehaviour
 
     private void Update() 
     {
-      if(_enemyController.HaseEnemyes() != true) 
+      if(_coinManager.NumbersOfCoins >=6) 
           OpenDoor();
       
     }

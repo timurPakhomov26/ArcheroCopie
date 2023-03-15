@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -7,8 +5,8 @@ public class CoinManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _coinsCount;
     [SerializeField] private GameObject _coinPrefab;
-
      private int _numberOfCoins;
+     public int NumbersOfCoins => _numberOfCoins;
 
     public void AddCoin()
     {

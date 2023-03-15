@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -58,11 +57,6 @@ public class EnemyController : MonoBehaviour
       return newEnemy;
    }
    
-   private void OnTriggerEnter(Collider other) 
-   {
-      
-      Destroy(gameObject); 
-   }
 
    public void RemoveEnemy(Enemy enemy)
    {
