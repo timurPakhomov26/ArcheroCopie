@@ -12,6 +12,7 @@ public class PlayerBehaviorIdle : IPlayerBehavior
     }
     public void Enter()
     {
+      
          Debug.Log("Enter Idle Behavior");
     }
 

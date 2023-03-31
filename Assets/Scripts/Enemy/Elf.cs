@@ -14,11 +14,14 @@ public class Elf : Enemy
      {
       _coinManager = FindObjectOfType<CoinManager>();
        _playerT = FindObjectOfType<Player>().transform;
+        BulletPool = FindObjectOfType<EnemyBulletPool>();
      }
 
     protected  void Update() 
     {     
-      StateChange(transform,_playerT);
+      RotateToPlayer(transform,_playerT);
+      StateChange(this.transform,_playerT);
+      GetBehavior(transform,_playerT);
     }
 
     protected override void OnDie()

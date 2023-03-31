@@ -4,9 +4,11 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private int _enemyesCount;
-    [SerializeField] private GameObject[] _enemyTypes;
+   [SerializeField] private int _enemyesCount;
+   [SerializeField] private GameObject[] _enemyTypes;
    [SerializeField] private List<GameObject> _enemyes = new List<GameObject>();
+   
+   public float range = 10f;
     
 
     private void Start() 
@@ -21,7 +23,7 @@ public class EnemyController : MonoBehaviour
              var enemy = Instantiate(_enemyTypes[i],new Vector3(positionX,0,positionY),Quaternion.identity); 
              _enemyes.Add(enemy);
           }
-       }    
+       }     
     }
 
     private void Update() 
@@ -33,11 +35,11 @@ public class EnemyController : MonoBehaviour
        }   
     }
 
-   public Enemy GetDistance(Vector3 player)
+   public Enemy GetNearstEnemy(Vector3 player)
    {
       
     float minDistance = float.MaxValue; 
-   Enemy newEnemy = null;
+    Enemy newEnemy = null;
      
      if(_enemyes.Count > 0)
      {
@@ -68,9 +70,8 @@ public class EnemyController : MonoBehaviour
       return _enemyes.Count > 0;
    }
 
-   public float range = 10f;
 
-   bool RandomPoint(Vector3 center,float range,out Vector3 result)
+   private bool RandomPoint(Vector3 center,float range,out Vector3 result)
    {
       for(int i =0;i<30;i++)
       {

@@ -22,23 +22,20 @@ public abstract class Enemy : MonoBehaviour
    [SerializeField] protected Transform  Pointer;
    [SerializeField] protected Transform  ChildTransform;
    [SerializeField] protected float BulletSpeed;
-   protected Rigidbody Rigidbodyy;
+    protected EnemyBulletPool BulletPool;
+   [SerializeField] protected Rigidbody Rigidbodyy;
    protected Enemy ChildEnemy;
-   protected Player _player;
-   protected EnemyController _enemyController;
+
    protected CoinManager _coinManager;
    [SerializeField]protected NavMeshAgent _mesh;
   
    protected float _time = 0f;
 
-  private EnemyBehavior currentBehavior = new EnemyBehavior();
+   private EnemyBehavior currentBehavior = new EnemyBehavior();
 
     protected void Start() 
     {
-      _enemyController  =FindObjectOfType<EnemyController>();
       Rigidbodyy = GetComponent<Rigidbody>(); 
-     // _mesh = GetComponent<NavMeshAgent>();
-     _player = FindObjectOfType<Player>();
     }
     
     public void TakeDamage(int damage)
@@ -55,7 +52,7 @@ public abstract class Enemy : MonoBehaviour
   
     protected  void Die()
     {  
-      Destroy(ChildGameobject);
+      Destroy(gameObject);
     } 
 
     protected  void Move(Transform playerTransform)
@@ -64,16 +61,19 @@ public abstract class Enemy : MonoBehaviour
       _mesh.SetDestination(playerTransform.position);
     }
 
-    protected  void Attack(Transform playerTransform)
+    protected  void Attack(Transform enemyTransform,Transform playerTransform)
     {
+
         _time += Time.deltaTime;
-        RotateToPlayer(playerTransform);
+       // RotateToPlayer(enemyTransform,playerTransform);
 
        if(_time > AttackSpeed)
        {
-        var bullet =  MonoBehaviour.Instantiate(Bullet,Pointer.position,Quaternion.identity);
-        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed,
-            ForceMode.VelocityChange);
+      //  var bullet =  MonoBehaviour.Instantiate(Bullet,Pointer.position,Quaternion.identity);
+      //  bullet.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed,
+            //ForceMode.VelocityChange);
+       BulletPool.CreateBullet(Pointer.position,Pointer.transform.forward * BulletSpeed);
+
         _time = 0;
        }
     }
@@ -91,7 +91,7 @@ public abstract class Enemy : MonoBehaviour
       else      
          currentBehavior = EnemyBehavior.Move;
             
-          GetBehavior(enemyTransform,playerTransform);
+      // GetBehavior(enemyTransform,playerTransform);
     }
 
     protected void GetBehavior(Transform enemyTransform,Transform playerTransform)
@@ -99,7 +99,7 @@ public abstract class Enemy : MonoBehaviour
        if(currentBehavior == EnemyBehavior.Attack)
        {
           _mesh.speed = 0;
-          Attack(playerTransform);
+          Attack(enemyTransform,playerTransform);
        }
 
        else 
@@ -108,17 +108,17 @@ public abstract class Enemy : MonoBehaviour
        }
     }
 
-    protected abstract void OnDie();
+     protected abstract void OnDie();
  //   protected abstract void RotateToPlayer();
       
-      protected  void RotateToPlayer(Transform playerTransform)
+      protected  void RotateToPlayer(Transform enemyTransform,Transform playerTransform)
     {
-      Debug.Log($" Rotate to player {this} ");
         if(playerTransform == null) 
            return;
 
-       var direction = playerTransform.position - transform.position;
-       transform.LookAt(direction * 20f);
+       var direction = playerTransform.transform.position - enemyTransform.transform.position;
+       Rigidbodyy.rotation = Quaternion.LookRotation(direction);
+    
       
     }
     public void RemoveEnemy(List<GameObject> list)

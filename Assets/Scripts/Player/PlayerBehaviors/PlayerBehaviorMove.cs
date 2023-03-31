@@ -16,6 +16,7 @@ public class PlayerBehaviorMove : IPlayerBehavior
 
     public void Enter()
     {
+      _player.Anim.SetTrigger("Run");
          Debug.Log("Enter Move BH");   
     }
 

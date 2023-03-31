@@ -15,12 +15,11 @@ public class Coin : MonoBehaviour
       if(other.attachedRigidbody == null)
          return;
 
-      if(other.attachedRigidbody.GetComponent<Player>())
-      {
-        Destroy(gameObject);   
+     if(other.attachedRigidbody.GetComponent<Player>())
+     {
         FindObjectOfType<CoinManager>().AddCoin();
-      }
-         
+        Destroy(gameObject); 
+     }  
        
     }
 }

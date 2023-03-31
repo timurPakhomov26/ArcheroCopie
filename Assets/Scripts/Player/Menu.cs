@@ -9,8 +9,9 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject _door;
     [SerializeField] private EnemyController _enemyController;
     [SerializeField] private CoinManager _coinManager;
-
-    
+    [SerializeField] private int _product;
+    [SerializeField] private Animator _popupPauseGameAnimator;
+ 
     private void Start() 
     {
        _winMenu.SetActive(false);
@@ -30,10 +31,11 @@ public class Menu : MonoBehaviour
        _menuPanel.SetActive(true);
        Time.timeScale = 0;
     }
+
      public void OnContinueClick()
     {
-       _menuPanel.SetActive(false);
-       Time.timeScale = 1;
+        Time.timeScale = 1;
+       StartCoroutine(ClosePauseMenu());
     }
 
     public void WinGame()
@@ -64,5 +66,11 @@ public class Menu : MonoBehaviour
         
          Time.timeScale = 1;   
         
+    }
+    IEnumerator ClosePauseMenu()
+    {
+       _popupPauseGameAnimator.SetTrigger("ClosePopup");
+      yield return  new WaitForSeconds(0.5f);
+       _menuPanel.SetActive(false);
     }
 }

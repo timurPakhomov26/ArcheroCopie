@@ -15,15 +15,11 @@ public class BulletPool : MonoBehaviour
       _pool.AutoExpand = _autoExpand;    
     }
 
-    public void CreateCube(Vector3 position,Vector3 direction)
+    public void CreateBullet(Vector3 position,Vector3 direction)
     {
-      var  bullet = _pool.GetFreeElement();
+       var  bullet = _pool.GetFreeElement();
        bullet.transform.position = position;
        bullet.GetComponent<Rigidbody>().AddForce(direction,ForceMode.VelocityChange);
      
     } 
-    public void AddForcedBullet(Vector3 force)
-    {
-       // _bullet.GetComponent<Rigidbody>().AddForce(force,ForceMode.VelocityChange);
-    }
 }

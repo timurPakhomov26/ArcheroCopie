@@ -4,17 +4,10 @@ using UnityEngine;
 
 
 public class PlayerController : MonoBehaviour
-{
-    
+{   
     [SerializeField] private Player _player;   
-    private EnemyController _enemyController;
+    [SerializeField] private EnemyController _enemyController;
    
-
-    private void Start() 
-    {
-       _enemyController = FindObjectOfType<EnemyController>(); 
-             
-    }
 
      private void Update() 
      {

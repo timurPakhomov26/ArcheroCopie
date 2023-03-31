@@ -251,6 +251,7 @@ MonoBehaviour:
   Pointer: {fileID: 2624534401089461141}
   ChildTransform: {fileID: 5362897925712642688}
   BulletSpeed: 5
+  Rigidbodyy: {fileID: -4299073251484361357}
   _mesh: {fileID: 6078501175844687589}
 --- !u!54 &-4299073251484361357
 Rigidbody:

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
-   [SerializeField] private int _healthPoint;
+   [SerializeField] private CoinManager _coinManager;
 
    [Header("Move")]
    [SerializeField] private float _moveSpeed;
@@ -22,8 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _attackSpeed;
-    [SerializeField] private int _damage;
-    public int HealthPoint => _healthPoint; 
+    [SerializeField] private int _damage = 1;
     public float BulletSpeed =>_bulletSpeed;
     public float AttackSpeed =>_attackSpeed;
     public int Damage => _damage;
@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Menu _menu;
     [SerializeField] private EnemyController _enemyController;
+
+    [SerializeField] private Animator _animator;
+    public Animator Anim =>_animator;
 
     private Dictionary<Type,IPlayerBehavior> _behaviorsMap;
     private IPlayerBehavior _behaviorCurrent;
@@ -40,6 +43,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private BulletPool _bulletPool;
     public BulletPool BulletPool =>_bulletPool;
+
+     [SerializeField] private BulletParticlesPool _particlePool;
+     public BulletParticlesPool ParticlesPool =>_particlePool;
 
    private void Start()
     {
@@ -96,7 +102,7 @@ public class Player : MonoBehaviour
        return _behaviorsMap[type];
     }
 
-    private void LateUpdate()
+    private void Update()
     {
        if(_behaviorCurrent !=null)
            _behaviorCurrent.Update();
@@ -104,20 +110,9 @@ public class Player : MonoBehaviour
 
      private void OnTriggerEnter(Collider other) 
      {
-        if(other.CompareTag("Finish"))               
-           _menu.WinGame();     
-     }
 
-   public void TakeDamage(int damage)
-   {
-     _healthPoint -= damage;
-    
-    if(HealthPoint <= 0)
-    {
-       _healthPoint=0;
-        gameObject.SetActive(false);
-       _menu.StopGame();
-    }    
-   }
+      if(other.CompareTag("Finish"))               
+           _menu.WinGame();    
+     }
     
 }
